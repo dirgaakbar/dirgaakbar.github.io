@@ -67,15 +67,15 @@ nav a:hover::after{
 }
 
 .hero img{
-  width: 180px;
-  max-width: 80%;
-  height: auto;
+  width: clamp(120px, 30vw, 180px);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border-radius: 50%;
   border: 5px solid #38bdf8;
-  box-shadow: 0 0 50px #38bdf8;
+  box-shadow: 0 0 40px #38bdf8;
   margin-bottom: 25px;
-}
 
+  
 }
 
 .hero h1{
