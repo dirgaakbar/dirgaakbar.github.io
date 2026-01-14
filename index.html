@@ -1,64 +1,81 @@
 <!DOCTYPE html>
 <html lang="id" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <title>Akbar | Professional Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio Muhammad Chairil Dirga Akbar, Backend & Web Developer, Networking, Electrical Technician.">
-  <meta property="og:title" content="Akbar | Professional Portfolio">
-  <meta property="og:description" content="Portfolio Muhammad Chairil Dirga Akbar.">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akbar | Professional Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <div class="brand">Akbar</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-    <button id="theme-toggle" aria-label="Toggle Dark/Light Mode">🌞/🌙</button>
-  </nav>
+    <div class="brand">Akbar</div>
+    
+    <nav id="nav-menu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-btns">
+        <button id="theme-toggle" title="Ganti Tema"><i class="fas fa-moon"></i></button>
+        <button id="menu-icon" title="Menu"><i class="fas fa-bars"></i></button>
+    </div>
 </header>
 
 <section id="home" class="section hero reveal">
-  <img src="https://via.placeholder.com/230" alt="Foto Akbar" loading="lazy">
-  <h1>Muhammad Chairil Dirga Akbar</h1>
-  <p class="typing"></p>
+    <div class="hero-content">
+        <img src="https://via.placeholder.com/230" alt="Foto Akbar">
+        <h1>Muhammad Chairil Dirga Akbar</h1>
+        <p class="typing-container">I am a <span class="typing"></span></p>
+    </div>
 </section>
 
 <section id="about" class="section reveal">
-  <h2>About Me</h2>
-  <p>
-    Saya adalah profesional teknik dan IT dengan keahlian
-    instalasi tenaga listrik, jaringan LAN, service AC,
-    backend development, web development, dan networking.
-    Berorientasi pada kualitas, efisiensi, dan solusi nyata.
-  </p>
+    <div class="container">
+        <h2>About Me</h2>
+        <div class="divider"></div>
+        <p>
+            Saya adalah profesional teknik dan IT dengan keahlian instalasi tenaga listrik, 
+            jaringan LAN, service AC, backend development, web development, dan networking. 
+            Berorientasi pada kualitas, efisiensi, dan solusi nyata.
+        </p>
+    </div>
 </section>
 
 <section id="skills" class="section reveal">
-  <h2>My Skills</h2>
-  <div class="skill-grid">
-    <div class="skill-card">Instalasi Tenaga Listrik & LAN</div>
-    <div class="skill-card">Service AC</div>
-    <div class="skill-card">Backend Developer</div>
-    <div class="skill-card">Web Development</div>
-    <div class="skill-card">Networking</div>
-  </div>
+    <div class="container">
+        <h2>My Skills</h2>
+        <div class="divider"></div>
+        <div class="skill-grid">
+            <div class="skill-card"><i class="fas fa-bolt"></i><p>Instalasi Listrik & LAN</p></div>
+            <div class="skill-card"><i class="fas fa-snowflake"></i><p>Service AC</p></div>
+            <div class="skill-card"><i class="fas fa-code"></i><p>Backend Developer</p></div>
+            <div class="skill-card"><i class="fas fa-globe"></i><p>Web Development</p></div>
+            <div class="skill-card"><i class="fas fa-network-wired"></i><p>Networking</p></div>
+        </div>
+    </div>
 </section>
 
 <section id="contact" class="section reveal">
-  <h2>Contact Me</h2>
-  <div class="contact-action">
-    <a href="https://wa.me/6285348550315" target="_blank">WhatsApp</a>
-    <a href="mailto:dirgaakbar170805@gmail.com">Email</a>
-  </div>
+    <div class="container">
+        <h2>Contact Me</h2>
+        <div class="divider"></div>
+        <div class="contact-action">
+            <a href="https://wa.me/6285348550315" target="_blank" class="btn-wa">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="mailto:dirgaakbar170805@gmail.com" class="btn-email">
+                <i class="fas fa-envelope"></i> Email
+            </a>
+        </div>
+    </div>
 </section>
 
 <footer>
-  © Copyright by Akbar
+    <p>© <span id="year"></span> Copyright by Akbar. Built with Precision.</p>
 </footer>
 
 <script src="script.js"></script>
