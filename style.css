@@ -181,3 +181,9 @@ footer{
     font-size:26px;
   }
 }
+@media (max-width:480px){
+  .contact-action a{
+    width:100%;
+    max-width:280px;
+  }
+}
