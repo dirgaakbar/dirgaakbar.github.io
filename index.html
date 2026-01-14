@@ -1,71 +1,107 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portofolio Muhammad Chairil Dirga Akbar</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Muhammad Chairil Dirga Akbar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <h1 class="logo">Muhammad Chairil Dirga Akbar</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-item">Home</a></li>
+                    <li><a href="#about" class="nav-item">About</a></li>
+                    <li><a href="#skill" class="nav-item">Skill</a></li>
+                    <li><a href="#contact" class="nav-item">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="darkModeBtn">🌙</button>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </header>
 
-<header>
-  <h1>Muhammad Chairil Dirga Akbar</h1>
-  <nav>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skill</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-  <button class="toggle-btn" id="modeToggle">Dark Mode</button>
-</header>
+    <!-- Home Section with Slide -->
+    <section id="home">
+        <div class="hero-slide">
+            <div class="slide active">
+                <img src="foto.jpg" alt="Foto Muhammad Chairil Dirga Akbar">
+                <h2>Muhammad Chairil Dirga Akbar</h2>
+            </div>
+            <div class="slide">
+                <img src="foto2.jpg" alt="Foto Profesional">
+                <h2>Backend Developer & Networking Expert</h2>
+            </div>
+        </div>
+    </section>
 
-<!-- Home Slider -->
-<section id="home">
-  <div class="home-slide active">
-    <img src="https://via.placeholder.com/200" alt="Foto Muhammad Chairil Dirga Akbar">
-    <h2>Muhammad Chairil Dirga Akbar</h2>
-    <p>Instalasi Tenaga Listrik & Jaringan LAN | Service AC | Backend Developer | Web Development | Networking</p>
-  </div>
-  <div class="home-slide">
-    <img src="https://via.placeholder.com/200" alt="Foto Muhammad Chairil Dirga Akbar">
-    <h2>Welcome to My Portfolio</h2>
-    <p>Professional and Passionate in Tech Solutions</p>
-  </div>
-</section>
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>Saya seorang profesional di bidang instalasi tenaga listrik, jaringan LAN, service AC, backend development, web development, dan networking. Saya selalu berusaha memberikan solusi terbaik, efisien, dan modern.</p>
+        </div>
+    </section>
 
-<!-- About Section -->
-<section id="about">
-  <h2>About Me</h2>
-  <p>
-    Halo! Saya Muhammad Chairil Dirga Akbar, seorang profesional yang berpengalaman dalam instalasi tenaga listrik, jaringan LAN, service AC, pengembangan backend, web development, dan networking. Saya selalu bersemangat untuk mengembangkan skill dan berkontribusi dalam proyek-proyek teknologi.
-  </p>
-</section>
+    <!-- Skill Section -->
+    <section id="skill">
+        <div class="container">
+            <h2>My Skills</h2>
+            <div class="skills">
+                <div class="skill-item">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instalasi Tenaga Listrik</h3>
+                    <div class="progress"><div class="progress-bar" data-percent="90%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Jaringan LAN</h3>
+                    <div class="progress"><div class="progress-bar" data-percent="85%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-fan"></i>
+                    <h3>Service AC</h3>
+                    <div class="progress"><div class="progress-bar" data-percent="80%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-server"></i>
+                    <h3>Backend Developer</h3>
+                    <div class="progress"><div class="progress-bar" data-percent="75%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-code"></i>
+                    <h3>Web Development</h3>
+                    <div class="progress"><div class="progress-bar" data-percent="85%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-sitemap"></i>
+                    <h3>Networking</h3>
+                    <div class="progress"><div class="progress-bar" data-percent="80%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Skills Section -->
-<section id="skills">
-  <h2>My Skills</h2>
-  <div class="skill-container">
-    <div class="skill-box active">Instalasi Tenaga Listrik & Jaringan LAN</div>
-    <div class="skill-box">Service AC</div>
-    <div class="skill-box">Backend Developer</div>
-    <div class="skill-box">Web Development</div>
-    <div class="skill-box">Networking</div>
-  </div>
-</section>
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <div class="contact-buttons">
+                <a href="https://wa.me/6285348550315" target="_blank" class="btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="mailto:dirgaakbar170805@gmail.com" class="btn"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+        </div>
+    </section>
 
-<!-- Contact Section -->
-<section id="contact">
-  <h2>Contact Me</h2>
-  <a class="contact-btn" href="https://wa.me/085348550315" target="_blank">WhatsApp</a>
-  <a class="contact-btn" href="mailto:dirgaakbar170805@gmail.com" target="_blank">Email</a>
-</section>
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 by Akbar</p>
+    </footer>
 
-<footer>
-  &copy; Muhammad Chairil Dirga Akbar
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
