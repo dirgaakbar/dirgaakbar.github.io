@@ -12,10 +12,10 @@ window.addEventListener('scroll', () => {
 
 // Typing Effect
 const roles = [
-  "Backend Developer",
-  "Web Developer",
-  "Networking Specialist",
-  "Electrical & AC Technician"
+  "Junior Backend Developer",
+  "Wordpress Developer",
+  "Network Technician",
+  "Electrician & AC Technician"
 ];
 
 let i = 0, j = 0;
