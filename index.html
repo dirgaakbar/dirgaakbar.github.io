@@ -1,103 +1,71 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akbar | Portfolio</title>
-
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portofolio Muhammad Chairil Dirga Akbar</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <div class="brand">Akbar</div>
-
-  <nav id="nav-menu">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
+  <h1>Muhammad Chairil Dirga Akbar</h1>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skill</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </nav>
-
-  <div class="header-btns">
-    <button id="theme-toggle" aria-label="Ganti tema">
-      <i class="fas fa-moon"></i>
-    </button>
-    <button id="menu-icon" aria-label="Menu">
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
+  <button class="toggle-btn" id="modeToggle">Dark Mode</button>
 </header>
 
-<section id="home" class="section hero reveal">
-  <img src="foto akbar.jpg" alt="Foto Akbar">
-  <h1>Muhammad Chairil Dirga Akbar</h1>
-  <p class="typing-container">I am a <span class="typing"></span></p>
+<!-- Home Slider -->
+<section id="home">
+  <div class="home-slide active">
+    <img src="https://via.placeholder.com/200" alt="Foto Muhammad Chairil Dirga Akbar">
+    <h2>Muhammad Chairil Dirga Akbar</h2>
+    <p>Instalasi Tenaga Listrik & Jaringan LAN | Service AC | Backend Developer | Web Development | Networking</p>
+  </div>
+  <div class="home-slide">
+    <img src="https://via.placeholder.com/200" alt="Foto Muhammad Chairil Dirga Akbar">
+    <h2>Welcome to My Portfolio</h2>
+    <p>Professional and Passionate in Tech Solutions</p>
+  </div>
 </section>
 
-<section id="about" class="section reveal">
+<!-- About Section -->
+<section id="about">
   <h2>About Me</h2>
-  <div class="divider"></div>
-  <p class="about-text">
-    Profesional teknik dan IT dengan fokus pada instalasi listrik, jaringan,
-    backend dan web development. Mengutamakan kerapian, efisiensi, dan solusi nyata.
+  <p>
+    Halo! Saya Muhammad Chairil Dirga Akbar, seorang profesional yang berpengalaman dalam instalasi tenaga listrik, jaringan LAN, service AC, pengembangan backend, web development, dan networking. Saya selalu bersemangat untuk mengembangkan skill dan berkontribusi dalam proyek-proyek teknologi.
   </p>
 </section>
 
-<section id="skills" class="section reveal">
+<!-- Skills Section -->
+<section id="skills">
   <h2>My Skills</h2>
-  <div class="divider"></div>
-
-  <div class="skill-grid">
-    <div class="skill-card">
-      <i class="fas fa-bolt"></i>
-      <p>Instalasi Listrik & LAN</p>
-    </div>
-    <div class="skill-card">
-      <i class="fas fa-snowflake"></i>
-      <p>Service AC</p>
-    </div>
-    <div class="skill-card">
-      <i class="fas fa-code"></i>
-      <p>Backend Development</p>
-    </div>
-    <div class="skill-card">
-      <i class="fas fa-globe"></i>
-      <p>Web Development</p>
-    </div>
-    <div class="skill-card">
-      <i class="fas fa-network-wired"></i>
-      <p>Networking</p>
-    </div>
+  <div class="skill-container">
+    <div class="skill-box active">Instalasi Tenaga Listrik & Jaringan LAN</div>
+    <div class="skill-box">Service AC</div>
+    <div class="skill-box">Backend Developer</div>
+    <div class="skill-box">Web Development</div>
+    <div class="skill-box">Networking</div>
   </div>
 </section>
 
-<section id="contact" class="section reveal">
+<!-- Contact Section -->
+<section id="contact">
   <h2>Contact Me</h2>
-  <div class="divider"></div>
-
-  <div class="contact-action">
-    <a href="https://wa.me/6285348550315" target="_blank" rel="noopener noreferrer" class="btn-wa">
-      <i class="fab fa-whatsapp"></i> WhatsApp
-    </a>
-    <a href="mailto:dirgaakbar170805@gmail.com" class="btn-email">
-      <i class="fas fa-envelope"></i> Email
-    </a>
-  </div>
+  <a class="contact-btn" href="https://wa.me/085348550315" target="_blank">WhatsApp</a>
+  <a class="contact-btn" href="mailto:dirgaakbar170805@gmail.com" target="_blank">Email</a>
 </section>
 
 <footer>
-  <p>© <span id="year"></span> Akbar. All rights reserved.</p>
+  &copy; Muhammad Chairil Dirga Akbar
 </footer>
 
-<script src="script.js" defer></script>
+<script src="script.js"></script>
 </body>
 </html>
