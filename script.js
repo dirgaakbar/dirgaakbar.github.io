@@ -19,7 +19,7 @@ setInterval(() => {
     slides[currentSlide].classList.remove('active');
     currentSlide = (currentSlide + 1) % slides.length;
     slides[currentSlide].classList.add('active');
-}, 4000); // 4 detik per slide
+}, 4000);
 
 // Skill Progress Animation on Scroll
 const progressBars = document.querySelectorAll('.progress-bar');
