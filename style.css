@@ -66,14 +66,13 @@ nav a:hover::after{
   align-items:center;
 }
 
-.hero img {
-  border-radius: 50%;           
-  border: 5px solid #38bdf8;   
-  box-shadow: 0 0 50px #38bdf8; 
-  margin-bottom: 25px;
-  width: 100px;              
-  height: 100px;                
-  object-fit: cover;            
+.hero img{
+  border-radius:50%;
+  border:5px solid #38bdf8;
+  box-shadow:0 0 50px #38bdf8;
+  margin-bottom:25px;
+}
+
 }
 
 }
