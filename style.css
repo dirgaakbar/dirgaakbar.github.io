@@ -111,10 +111,23 @@ nav a:hover::after{
   box-shadow:0 0 30px #38bdf8;
 }
 
+/* CONTACT */
+.contact-action{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
 .contact-action a{
-  display:inline-block;
-  margin:20px;
-  padding:15px 45px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:220px;               /* tombol sama rata */
+  padding:15px 0;
   background:#38bdf8;
   color:#000;
   text-decoration:none;
@@ -123,10 +136,20 @@ nav a:hover::after{
   transition:.3s;
 }
 
+.contact-action a i{
+  font-size:20px;
+}
+
 .contact-action a:hover{
-  background:#0ea5e9;
+  transform:translateY(-5px);
   box-shadow:0 0 25px #38bdf8;
 }
+
+/* Warna khusus */
+.contact-action a:first-child{
+  background:#25D366; /* WhatsApp */
+}
+
 
 footer{
   padding:25px;
