@@ -1,358 +1,120 @@
- // =============================
-
-// DOM Ready Helper
-
-// =============================
-
-function ready(fn) {
-
-  if (document.readyState !== "loading") {
-
-    fn();
-
-  } else {
-
-    document.addEventListener("DOMContentLoaded", fn);
-
-  }
-
-}
-
-
-ready(function () {
-
+document.addEventListener("DOMContentLoaded", () => {
+  
   // =============================
-
-  // Year in footer
-
+  // 1. YEAR IN FOOTER
   // =============================
-
   const yearSpan = document.getElementById("year");
-
   if (yearSpan) {
-
     yearSpan.textContent = new Date().getFullYear();
-
   }
 
-
   // =============================
-
-  // Smooth scroll for nav links
-
+  // 2. THEME TOGGLE (Dark / Light)
   // =============================
-
-  const navLinks = document.querySelectorAll('a[href^="#"]');
-
-  navLinks.forEach((link) => {
-
-    link.addEventListener("click", function (e) {
-
-      const targetId = this.getAttribute("href");
-
-      if (!targetId || targetId === "#") return;
-
-
-      const targetEl = document.querySelector(targetId);
-
-      if (!targetEl) return;
-
-
-      e.preventDefault();
-
-      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
-
-    });
-
-  });
-
-
-  // =============================
-
-  // Theme toggle (Dark / Light)
-
-  // =============================
-
   const body = document.body;
-
   const toggleBtn = document.getElementById("themeToggle");
-
   const themeIcon = document.getElementById("themeIcon");
-
-
   const THEME_KEY = "portfolio-theme";
 
-
   function applyTheme(theme) {
-
-    if (!theme) return;
-
     body.setAttribute("data-theme", theme);
-
     if (themeIcon) {
-
       themeIcon.textContent = theme === "dark" ? "🌙" : "🌞";
-
     }
-
+    window.localStorage.setItem(THEME_KEY, theme);
   }
 
-
-  // Initial theme from localStorage or prefers-color-scheme
-
-  (function initTheme() {
-
-    const stored = window.localStorage.getItem(THEME_KEY);
-
-    if (stored === "dark" || stored === "light") {
-
-      applyTheme(stored);
-
-    } else {
-
-      // default dark, but respect system if explicitly light
-
-      const prefersDark = window.matchMedia &&
-
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-      applyTheme(prefersDark ? "dark" : "dark");
-
-    }
-
-  })();
-
+  // Cek tema sebelumnya atau gunakan default dark
+  const savedTheme = window.localStorage.getItem(THEME_KEY) || "dark";
+  applyTheme(savedTheme);
 
   if (toggleBtn) {
-
     toggleBtn.addEventListener("click", () => {
-
-      const current = body.getAttribute("data-theme") || "dark";
-
+      const current = body.getAttribute("data-theme");
       const next = current === "dark" ? "light" : "dark";
-
       applyTheme(next);
-
-      window.localStorage.setItem(THEME_KEY, next);
-
     });
-
   }
 
-
   // =============================
-
-  // Terminal Typing Effect
-
+  // 3. TERMINAL TYPING EFFECT
   // =============================
-
   const terminalTextEl = document.getElementById("terminalText");
-
-  const terminalCursorEl = document.getElementById("terminalCursor");
-
-
-  if (terminalTextEl && terminalCursorEl) {
-
+  if (terminalTextEl) {
     const lines = [
-
       "$ npm init -y",
-
       "$ npm install react react-dom",
-
       "$ git init",
-
       "$ git add .",
-
-      '$ git commit -m "feat: initial setup"',
-
+      '$ git commit -m "feat: setup"',
       "$ npm run dev",
-
-      "# Deploying to production...",
-
-      "# Done. Portfolio is live."
-
+      "# Deploying...",
+      "# Portfolio is live."
     ];
 
-
     let lineIndex = 0;
-
     let charIndex = 0;
-
-
-    const typingSpeed = 55; // ms per char
-
-    const linePause = 600; // pause between lines
-
+    let currentDisplay = "";
 
     function type() {
-
       if (lineIndex >= lines.length) {
-
-        // Loop effect: small delay, then reset text
-
         setTimeout(() => {
-
           terminalTextEl.textContent = "";
-
+          currentDisplay = "";
           lineIndex = 0;
-
           charIndex = 0;
-
           type();
-
-        }, 1300);
-
+        }, 3000);
         return;
-
       }
 
+      const currentLineText = lines[lineIndex];
 
-      const currentLine = lines[lineIndex];
-
-
-      if (charIndex <= currentLine.length) {
-
-        const visible = currentLine.slice(0, charIndex);
-
-        // Keep existing previous lines, only update last
-
-        const prev = terminalTextEl.textContent.split("\n");
-
-        prev[prev.length - 1] = visible;
-
-        terminalTextEl.textContent = prev.join("\n");
-
+      if (charIndex < currentLineText.length) {
+        terminalTextEl.textContent = currentDisplay + currentLineText.substring(0, charIndex + 1);
         charIndex++;
-
-        setTimeout(type, typingSpeed);
-
+        setTimeout(type, 50);
       } else {
-
-        // Finish line and go to next
-
-        terminalTextEl.textContent +=
-
-          (terminalTextEl.textContent ? "\n" : "") + currentLine;
-
-        terminalTextEl.textContent = terminalTextEl.textContent
-
-          .split("\n")
-
-          .slice(0, lineIndex + 1)
-
-          .join("\n");
-
+        currentDisplay += currentLineText + "\n";
+        terminalTextEl.textContent = currentDisplay;
         lineIndex++;
-
         charIndex = 0;
-
-
-        // Prepare next line placeholder
-
-        if (lineIndex < lines.length) {
-
-          terminalTextEl.textContent += "\n";
-
-        }
-
-
-        setTimeout(type, linePause);
-
+        setTimeout(type, 800);
       }
-
     }
-
-
-    // Initialize first line placeholder so splitting works
-
-    terminalTextEl.textContent = "";
-
-    setTimeout(type, 500); // run after small delay on load
-
+    type();
   }
 
-
   // =============================
-
-  // Contact form (Formspree Integration)
-
+  // 4. CONTACT FORM (Formspree)
   // =============================
-
   const contactForm = document.getElementById("contactForm");
-
   const feedbackEl = document.getElementById("formFeedback");
 
-
   if (contactForm && feedbackEl) {
-
-    contactForm.addEventListener("submit", async function (e) {
-
-      e.preventDefault(); // Kita tahan sebentar untuk proses AJAX agar lebih smooth
-
-
-      const formData = new FormData(contactForm);
-
-      feedbackEl.textContent = "Sedang mengirim pesan...";
-
-      feedbackEl.style.color = "var(--text-color)"; // Sesuaikan dengan variabel CSS Anda
-
-
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      feedbackEl.textContent = "Mengirim...";
+      
       try {
-
         const response = await fetch(contactForm.action, {
-
           method: 'POST',
-
-          body: formData,
-
-          headers: {
-
-            'Accept': 'application/json'
-
-          }
-
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
         });
 
-
         if (response.ok) {
-
-          // Jika Berhasil
-
           contactForm.reset();
-
-          feedbackEl.textContent = "Terima kasih! Pesanmu sudah berhasil terkirim.";
-
-          feedbackEl.style.color = "#4caf50"; // Warna Hijau
-
+          feedbackEl.textContent = "Terkirim!";
+          feedbackEl.style.color = "#4caf50";
         } else {
-
-          // Jika Gagal dari server
-
-          feedbackEl.textContent = "Oops! Ada kendala teknis. Coba lagi nanti.";
-
-          feedbackEl.style.color = "#f44336"; // Warna Merah
-
+          feedbackEl.textContent = "Gagal kirim.";
+          feedbackEl.style.color = "#f44336";
         }
-
-      } catch (error) {
-
-        // Jika Gagal koneksi
-
-        feedbackEl.textContent = "Gagal terhubung ke server. Periksa koneksi internet Anda.";
-
-        feedbackEl.style.color = "#f44336";
-
+      } catch (err) {
+        feedbackEl.textContent = "Error koneksi.";
       }
-
-
-      // Hilangkan pesan feedback setelah 5 detik
-
-      setTimeout(() => {
-
-        feedbackEl.textContent = "";
-
-      }, 5000);
-
+      setTimeout(() => { feedbackEl.textContent = ""; }, 4000);
     });
-
-  } 
+  }
+});
