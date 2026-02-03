@@ -75,12 +75,12 @@ ready(function () {
   }
 
   // =============================
+  // =============================
   // Terminal Typing Effect
   // =============================
   const terminalTextEl = document.getElementById("terminalText");
-  const terminalCursorEl = document.getElementById("terminalCursor");
 
-  if (terminalTextEl && terminalCursorEl) {
+  if (terminalTextEl) {
     const lines = [
       "$ npm init -y",
       "$ npm install react react-dom",
@@ -94,57 +94,45 @@ ready(function () {
 
     let lineIndex = 0;
     let charIndex = 0;
+    let currentDisplay = ""; 
 
-    const typingSpeed = 55; // ms per char
-    const linePause = 600; // pause between lines
+    const typingSpeed = 50; 
+    const linePause = 700; 
 
     function type() {
+      // Jika semua baris selesai, reset setelah jeda lama
       if (lineIndex >= lines.length) {
-        // Loop effect: small delay, then reset text
         setTimeout(() => {
           terminalTextEl.textContent = "";
+          currentDisplay = "";
           lineIndex = 0;
           charIndex = 0;
           type();
-        }, 1300);
+        }, 2000);
         return;
       }
 
-      const currentLine = lines[lineIndex];
+      const currentLineText = lines[lineIndex];
 
-      if (charIndex <= currentLine.length) {
-        const visible = currentLine.slice(0, charIndex);
-        // Keep existing previous lines, only update last
-        const prev = terminalTextEl.textContent.split("\n");
-        prev[prev.length - 1] = visible;
-        terminalTextEl.textContent = prev.join("\n");
+      if (charIndex < currentLineText.length) {
+        // Tambah karakter satu per satu
+        terminalTextEl.textContent = currentDisplay + currentLineText.substring(0, charIndex + 1);
         charIndex++;
         setTimeout(type, typingSpeed);
       } else {
-        // Finish line and go to next
-        terminalTextEl.textContent +=
-          (terminalTextEl.textContent ? "\n" : "") + currentLine;
-        terminalTextEl.textContent = terminalTextEl.textContent
-          .split("\n")
-          .slice(0, lineIndex + 1)
-          .join("\n");
+        // Baris selesai, tambahkan ke display permanen dan pindah baris
+        currentDisplay += currentLineText + "\n";
+        terminalTextEl.textContent = currentDisplay;
         lineIndex++;
         charIndex = 0;
-
-        // Prepare next line placeholder
-        if (lineIndex < lines.length) {
-          terminalTextEl.textContent += "\n";
-        }
-
         setTimeout(type, linePause);
       }
     }
 
-    // Initialize first line placeholder so splitting works
+    // Mulai animasi
     terminalTextEl.textContent = "";
-    setTimeout(type, 500); // run after small delay on load
+    setTimeout(type, 800);
   }
-
   // =============================
   // Contact form (Formspree Integration)
   // =============================
