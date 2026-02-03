@@ -75,12 +75,12 @@ ready(function () {
   }
 
   // =============================
-  // =============================
   // Terminal Typing Effect
   // =============================
   const terminalTextEl = document.getElementById("terminalText");
+  const terminalCursorEl = document.getElementById("terminalCursor");
 
-  if (terminalTextEl) {
+  if (terminalTextEl && terminalCursorEl) {
     const lines = [
       "$ npm init -y",
       "$ npm install react react-dom",
@@ -94,87 +94,89 @@ ready(function () {
 
     let lineIndex = 0;
     let charIndex = 0;
-    let currentDisplay = ""; 
 
-    const typingSpeed = 50; 
-    const linePause = 700; 
+    const typingSpeed = 55; // ms per char
+    const linePause = 600; // pause between lines
 
     function type() {
-      // Jika semua baris selesai, reset setelah jeda lama
       if (lineIndex >= lines.length) {
+        // Loop effect: small delay, then reset text
         setTimeout(() => {
           terminalTextEl.textContent = "";
-          currentDisplay = "";
           lineIndex = 0;
           charIndex = 0;
           type();
-        }, 2000);
+        }, 1300);
         return;
       }
 
-      const currentLineText = lines[lineIndex];
+      const currentLine = lines[lineIndex];
 
-      if (charIndex < currentLineText.length) {
-        // Tambah karakter satu per satu
-        terminalTextEl.textContent = currentDisplay + currentLineText.substring(0, charIndex + 1);
+      if (charIndex <= currentLine.length) {
+        const visible = currentLine.slice(0, charIndex);
+        // Keep existing previous lines, only update last
+        const prev = terminalTextEl.textContent.split("\n");
+        prev[prev.length - 1] = visible;
+        terminalTextEl.textContent = prev.join("\n");
         charIndex++;
         setTimeout(type, typingSpeed);
       } else {
-        // Baris selesai, tambahkan ke display permanen dan pindah baris
-        currentDisplay += currentLineText + "\n";
-        terminalTextEl.textContent = currentDisplay;
+        // Finish line and go to next
+        terminalTextEl.textContent +=
+          (terminalTextEl.textContent ? "\n" : "") + currentLine;
+        terminalTextEl.textContent = terminalTextEl.textContent
+          .split("\n")
+          .slice(0, lineIndex + 1)
+          .join("\n");
         lineIndex++;
         charIndex = 0;
+
+        // Prepare next line placeholder
+        if (lineIndex < lines.length) {
+          terminalTextEl.textContent += "\n";
+        }
+
         setTimeout(type, linePause);
       }
     }
 
-    // Mulai animasi
+    // Initialize first line placeholder so splitting works
     terminalTextEl.textContent = "";
-    setTimeout(type, 800);
+    setTimeout(type, 500); // run after small delay on load
   }
+
   // =============================
-  // Contact form (Formspree Integration)
+  // Contact form (client-side only)
   // =============================
   const contactForm = document.getElementById("contactForm");
   const feedbackEl = document.getElementById("formFeedback");
 
   if (contactForm && feedbackEl) {
-    contactForm.addEventListener("submit", async function (e) {
-      e.preventDefault(); // Kita tahan sebentar untuk proses AJAX agar lebih smooth
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
       const formData = new FormData(contactForm);
-      feedbackEl.textContent = "Sedang mengirim pesan...";
-      feedbackEl.style.color = "var(--text-color)"; // Sesuaikan dengan variabel CSS Anda
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const message = String(formData.get("message") || "").trim();
 
-      try {
-        const response = await fetch(contactForm.action, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          // Jika Berhasil
-          contactForm.reset();
-          feedbackEl.textContent = "Terima kasih! Pesanmu sudah berhasil terkirim.";
-          feedbackEl.style.color = "#4caf50"; // Warna Hijau
-        } else {
-          // Jika Gagal dari server
-          feedbackEl.textContent = "Oops! Ada kendala teknis. Coba lagi nanti.";
-          feedbackEl.style.color = "#f44336"; // Warna Merah
-        }
-      } catch (error) {
-        // Jika Gagal koneksi
-        feedbackEl.textContent = "Gagal terhubung ke server. Periksa koneksi internet Anda.";
-        feedbackEl.style.color = "#f44336";
+      if (!name || !email || !message) {
+        feedbackEl.textContent = "Semua field wajib diisi.";
+        feedbackEl.classList.remove("form-feedback--success");
+        feedbackEl.classList.add("form-feedback--error");
+        return;
       }
 
-      // Hilangkan pesan feedback setelah 5 detik
+      // Simulasi submit sukses (siap dihubungkan ke backend / service email)
+      contactForm.reset();
+      feedbackEl.textContent = "Terima kasih! Pesanmu sudah terkirim (simulasi).";
+      feedbackEl.classList.remove("form-feedback--error");
+      feedbackEl.classList.add("form-feedback--success");
+
       setTimeout(() => {
         feedbackEl.textContent = "";
-      }, 5000);
+        feedbackEl.classList.remove("form-feedback--success");
+      }, 3500);
     });
   }
+});
