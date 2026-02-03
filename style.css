@@ -359,21 +359,22 @@ body[data-theme="light"] .btn-ghost {
   font-size: 0.7rem;
 }
 
+/* Pastikan warna teks terminal dipaksa muncul */
 .terminal-body {
-  position: relative;
-  padding: 1.1rem 1.1rem 1.2rem;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  line-height: 1.5;
-  background: radial-gradient(circle at top left, #0b1120, #020617 50%);
-  color: var(--color-accent-2);
-  min-height: 190px;
+  background-color: #020617 !important; /* Warna hitam pekat */
+  color: #00ff00 !important; /* Warna hijau terang */
+  min-height: 200px;
+  overflow: hidden;
 }
 
+/* Pastikan elemen pre tidak aneh-aneh formattingnya */
 .terminal-text {
-  margin: 0;
   white-space: pre-wrap;
-  word-break: break-word;
+  word-wrap: break-word;
+  color: #00ff00 !important;
+  display: block;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .terminal-cursor {
