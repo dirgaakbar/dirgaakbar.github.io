@@ -146,37 +146,47 @@ ready(function () {
   }
 
   // =============================
-  // Contact form (client-side only)
+  // Contact form (Formspree Integration)
   // =============================
   const contactForm = document.getElementById("contactForm");
   const feedbackEl = document.getElementById("formFeedback");
 
   if (contactForm && feedbackEl) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+    contactForm.addEventListener("submit", async function (e) {
+      e.preventDefault(); // Kita tahan sebentar untuk proses AJAX agar lebih smooth
 
       const formData = new FormData(contactForm);
-      const name = String(formData.get("name") || "").trim();
-      const email = String(formData.get("email") || "").trim();
-      const message = String(formData.get("message") || "").trim();
+      feedbackEl.textContent = "Sedang mengirim pesan...";
+      feedbackEl.style.color = "var(--text-color)"; // Sesuaikan dengan variabel CSS Anda
 
-      if (!name || !email || !message) {
-        feedbackEl.textContent = "Semua field wajib diisi.";
-        feedbackEl.classList.remove("form-feedback--success");
-        feedbackEl.classList.add("form-feedback--error");
-        return;
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Jika Berhasil
+          contactForm.reset();
+          feedbackEl.textContent = "Terima kasih! Pesanmu sudah berhasil terkirim.";
+          feedbackEl.style.color = "#4caf50"; // Warna Hijau
+        } else {
+          // Jika Gagal dari server
+          feedbackEl.textContent = "Oops! Ada kendala teknis. Coba lagi nanti.";
+          feedbackEl.style.color = "#f44336"; // Warna Merah
+        }
+      } catch (error) {
+        // Jika Gagal koneksi
+        feedbackEl.textContent = "Gagal terhubung ke server. Periksa koneksi internet Anda.";
+        feedbackEl.style.color = "#f44336";
       }
 
-      // Simulasi submit sukses (siap dihubungkan ke backend / service email)
-      contactForm.reset();
-      feedbackEl.textContent = "Terima kasih! Pesanmu sudah terkirim (simulasi).";
-      feedbackEl.classList.remove("form-feedback--error");
-      feedbackEl.classList.add("form-feedback--success");
-
+      // Hilangkan pesan feedback setelah 5 detik
       setTimeout(() => {
         feedbackEl.textContent = "";
-        feedbackEl.classList.remove("form-feedback--success");
-      }, 3500);
+      }, 5000);
     });
   }
-});
