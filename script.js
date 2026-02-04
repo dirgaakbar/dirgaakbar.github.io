@@ -58,7 +58,7 @@ ready(function () {
     if (stored === "dark" || stored === "light") {
       applyTheme(stored);
     } else {
-      // default dark, but respect system if explicitly light
+      // default dark
       const prefersDark = window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches;
       applyTheme(prefersDark ? "dark" : "dark");
@@ -100,7 +100,6 @@ ready(function () {
 
     function type() {
       if (lineIndex >= lines.length) {
-        // Loop effect: small delay, then reset text
         setTimeout(() => {
           terminalTextEl.textContent = "";
           lineIndex = 0;
@@ -114,14 +113,12 @@ ready(function () {
 
       if (charIndex <= currentLine.length) {
         const visible = currentLine.slice(0, charIndex);
-        // Keep existing previous lines, only update last
         const prev = terminalTextEl.textContent.split("\n");
         prev[prev.length - 1] = visible;
         terminalTextEl.textContent = prev.join("\n");
         charIndex++;
         setTimeout(type, typingSpeed);
       } else {
-        // Finish line and go to next
         terminalTextEl.textContent +=
           (terminalTextEl.textContent ? "\n" : "") + currentLine;
         terminalTextEl.textContent = terminalTextEl.textContent
@@ -131,7 +128,6 @@ ready(function () {
         lineIndex++;
         charIndex = 0;
 
-        // Prepare next line placeholder
         if (lineIndex < lines.length) {
           terminalTextEl.textContent += "\n";
         }
@@ -140,63 +136,63 @@ ready(function () {
       }
     }
 
-    // Initialize first line placeholder so splitting works
     terminalTextEl.textContent = "";
-    setTimeout(type, 500); // run after small delay on load
+    setTimeout(type, 500);
   }
 
-// =============================
-// Contact form (Formspree integration)
-// =============================
-const contactForm = document.getElementById("contactForm");
-const feedbackEl = document.getElementById("formFeedback");
+  // =============================
+  // Contact form (Formspree integration)
+  // =============================
+  const contactForm = document.getElementById("contactForm");
+  const feedbackEl = document.getElementById("formFeedback");
 
-if (contactForm && feedbackEl) {
-  contactForm.addEventListener("submit", async function (e) {
-    e.preventDefault();
+  if (contactForm && feedbackEl) {
+    contactForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-    const formData = new FormData(contactForm);
-    const name = String(formData.get("name") || "").trim();
-    const email = String(formData.get("email") || "").trim();
-    const message = String(formData.get("message") || "").trim();
+      const formData = new FormData(contactForm);
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const message = String(formData.get("message") || "").trim();
 
-    if (!name || !email || !message) {
-      feedbackEl.textContent = "Semua field wajib diisi.";
-      feedbackEl.classList.remove("form-feedback--success");
-      feedbackEl.classList.add("form-feedback--error");
-      return;
-    }
+      if (!name || !email || !message) {
+        feedbackEl.textContent = "Semua field wajib diisi.";
+        feedbackEl.classList.remove("form-feedback--success");
+        feedbackEl.classList.add("form-feedback--error");
+        return;
+      }
 
-    // Tambahkan _replyto agar Formspree bisa balas email
-    formData.set("_replyto", email);
+      // Tambahkan _replyto agar Formspree bisa balas email
+      formData.set("_replyto", email);
 
-    try {
-      const response = await fetch("https://formspree.io/f/xykpvvwq", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
+      try {
+        const response = await fetch("https://formspree.io/f/xykpvvwq", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
 
-      if (response.ok) {
-        feedbackEl.textContent = "Terima kasih! Pesanmu sudah terkirim.";
-        feedbackEl.classList.remove("form-feedback--error");
-        feedbackEl.classList.add("form-feedback--success");
-        contactForm.reset();
+        if (response.ok) {
+          feedbackEl.textContent = "Terima kasih! Pesanmu sudah terkirim.";
+          feedbackEl.classList.remove("form-feedback--error");
+          feedbackEl.classList.add("form-feedback--success");
+          contactForm.reset();
 
-        setTimeout(() => {
-          feedbackEl.textContent = "";
+          setTimeout(() => {
+            feedbackEl.textContent = "";
+            feedbackEl.classList.remove("form-feedback--success");
+          }, 3500);
+        } else {
+          const data = await response.json();
+          feedbackEl.textContent = data?.error || "Terjadi kesalahan, silakan coba lagi.";
           feedbackEl.classList.remove("form-feedback--success");
-        }, 3500);
-      } else {
-        const data = await response.json();
-        feedbackEl.textContent = data?.error || "Terjadi kesalahan, silakan coba lagi.";
+          feedbackEl.classList.add("form-feedback--error");
+        }
+      } catch (err) {
+        feedbackEl.textContent = "Terjadi kesalahan jaringan, silakan coba lagi.";
         feedbackEl.classList.remove("form-feedback--success");
         feedbackEl.classList.add("form-feedback--error");
       }
-    } catch (err) {
-      feedbackEl.textContent = "Terjadi kesalahan jaringan, silakan coba lagi.";
-      feedbackEl.classList.remove("form-feedback--success");
-      feedbackEl.classList.add("form-feedback--error");
-    }
-  });
-}
+    });
+  }
+});
