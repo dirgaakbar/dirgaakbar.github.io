@@ -145,38 +145,58 @@ ready(function () {
     setTimeout(type, 500); // run after small delay on load
   }
 
-  // =============================
-  // Contact form (client-side only)
-  // =============================
-  const contactForm = document.getElementById("contactForm");
-  const feedbackEl = document.getElementById("formFeedback");
+// =============================
+// Contact form (Formspree integration)
+// =============================
+const contactForm = document.getElementById("contactForm");
+const feedbackEl = document.getElementById("formFeedback");
 
-  if (contactForm && feedbackEl) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+if (contactForm && feedbackEl) {
+  contactForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      const formData = new FormData(contactForm);
-      const name = String(formData.get("name") || "").trim();
-      const email = String(formData.get("email") || "").trim();
-      const message = String(formData.get("message") || "").trim();
+    const formData = new FormData(contactForm);
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const message = String(formData.get("message") || "").trim();
 
-      if (!name || !email || !message) {
-        feedbackEl.textContent = "Semua field wajib diisi.";
+    if (!name || !email || !message) {
+      feedbackEl.textContent = "Semua field wajib diisi.";
+      feedbackEl.classList.remove("form-feedback--success");
+      feedbackEl.classList.add("form-feedback--error");
+      return;
+    }
+
+    // Tambahkan _replyto agar Formspree bisa balas email
+    formData.set("_replyto", email);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xykpvvwq", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+
+      if (response.ok) {
+        feedbackEl.textContent = "Terima kasih! Pesanmu sudah terkirim.";
+        feedbackEl.classList.remove("form-feedback--error");
+        feedbackEl.classList.add("form-feedback--success");
+        contactForm.reset();
+
+        setTimeout(() => {
+          feedbackEl.textContent = "";
+          feedbackEl.classList.remove("form-feedback--success");
+        }, 3500);
+      } else {
+        const data = await response.json();
+        feedbackEl.textContent = data?.error || "Terjadi kesalahan, silakan coba lagi.";
         feedbackEl.classList.remove("form-feedback--success");
         feedbackEl.classList.add("form-feedback--error");
-        return;
       }
-
-      // Simulasi submit sukses (siap dihubungkan ke backend / service email)
-      contactForm.reset();
-      feedbackEl.textContent = "Terima kasih! Pesanmu sudah terkirim (simulasi).";
-      feedbackEl.classList.remove("form-feedback--error");
-      feedbackEl.classList.add("form-feedback--success");
-
-      setTimeout(() => {
-        feedbackEl.textContent = "";
-        feedbackEl.classList.remove("form-feedback--success");
-      }, 3500);
-    });
-  }
-});
+    } catch (err) {
+      feedbackEl.textContent = "Terjadi kesalahan jaringan, silakan coba lagi.";
+      feedbackEl.classList.remove("form-feedback--success");
+      feedbackEl.classList.add("form-feedback--error");
+    }
+  });
+}
